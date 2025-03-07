@@ -1,4 +1,6 @@
-Sql
+MYSQL
+
+E-book - https://doodles-grin-biv.craft.me/kcOCYYIr6kLdX9
 
 ==================================================================================================
 
@@ -34,3 +36,5 @@ link- https://docs.google.com/document/d/11lVKjUqj605ujpNDeAKrR3QmWLUgMKn14ZwJsH
 Labwork-2.3
 
 link- https://docs.google.com/document/d/14jBTCExgVPwfYVL4q9f6yn9ixHhWxXASSRa7tGGCktE/edit?tab=t.0
+
+==================================================================================================
