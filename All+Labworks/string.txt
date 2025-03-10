@@ -1,0 +1,9 @@
+SELECT * FROM my_database.smartphones_cleaned_v6;
+SELECT brand_name , UPPER(brand_name) AS Updated_name FROM my_database.smartphones_cleaned_v6;
+
+
+SELECT brand_name , lower(brand_name) AS Updated_name FROM my_database.smartphones_cleaned_v6;
+
+SELECT brand_name, LENGTH(brand_name) AS name_length FROM my_database.smartphones_cleaned_v6;
+
+SELECT SUBSTRING(brand_name, 1, 4) AS first_four_chars FROM my_database.smartphones_cleaned_v6;

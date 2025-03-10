@@ -1,0 +1,44 @@
+Q-1--->create table with database
+
+CREATE DATABASE School;
+
+Create table School.students(
+id int primary key,
+name varchar(50) not null,
+age int(3),
+grade varchar(2),
+email varchar(30));
+
+
+Insert into school.students(id,name,age,Grade,email)
+values
+(1,'abhi',18,'A','abhi@gmail.com'),
+(2,'abhishek',20,'B','abhishek@gmail.com'),
+(3,'abhilal',21,'C','abhilal@gmail.com');
+
+select * From school.students;
+
+================================================================
+
+Q-2=>
+create product table
+
+CREATE TABLE school.products 
+(
+id int primary key,
+name varchar(50),
+catogery varchar(50),
+price decimal(10,2),
+quentity int
+);
+
+INSERT INTO school.products(id,name,catogery,price,quentity)
+values
+(1,'wafer','namkeen',30,500),
+(2,'sev','namkeen',40,300),
+(3,'biskit','sweet',35,650),
+(4,'chocolate','sweet',70,800),
+(5,'namkeen','namkeen',45,200);
+
+
+Select * from school.products; 

@@ -1,0 +1,58 @@
+	# LAB WORK -1.1 #
+	#===============#
+
+Q-1.
+===> installation
+
+install xampp & MySQL
+========================================================
+
+Q-2.
+===> conection
+
+connect with MySQL and apache server.
+========================================================
+
+Q-3.
+===> create database
+
+CREATE SCHEMA `school_db` ;
+========================================================
+
+Q-4.
+===> create table In db
+
+CREATE table school_db.students
+(
+id int(5) PRIMARY KEY,
+name varchar(30),
+age int(3) not null,
+class varchar(10) ,
+grade varchar(10)
+);
+========================================================
+
+Q-4.
+===> Insert values in table
+
+INSERT INTO school_db.students(id,name,age,class,grade)
+values
+(1,'Ram',18,'9th','A'),
+(2,'Shyam',19,'10th','B'),
+(3,'Ghanshyam',11,'9th','C'),
+(4,'Lakshman',21,'12th','D'),
+(5,'Bhim',20,'8th','E');
+========================================================
+
+Q-5.
+===> show all table rows and columns
+
+SELECT * FROM school_db.students;
+========================================================
+
+Q-6.
+===> Show all databases
+
+SHOW DATABASES;
+========================================================
+

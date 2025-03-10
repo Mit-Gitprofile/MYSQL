@@ -1,0 +1,113 @@
+	# LAB WORK -1.2 #
+	#===============#
+
+Q-1.
+===> SHOW DATABASE AND CREATE NEW DATABASE
+
+SHOW DATABASES;
+
+CREATE DATABASE company_db;
+========================================================
+
+Q-2.
+===> ctreate table in database
+
+CREATE TABLE company_db.Employee 
+(
+Emp_id int primary key,
+Emp_name varchar(50),
+Department varchar(50),
+Salary decimal(10,2)
+);
+
+
+========================================================
+
+Q-3.
+===> INSERT 5 RECORDS IN TABLE AND SELECT SPECIFIC VALUES
+
+INSERT INTO company_db.employee(Emp_id,Emp_name,Department,salary)
+values
+(1,'Ram','A',30000),
+(2,'Shyam','B',40000),
+(3,'Ghanshyam','C',50000),
+(4,'Lakshman','D',45000),
+(5,'Bhim','E',60000);
+
+
+SELECT * FROM company_db.employee;
+
+SELECT Emp_name,Salary FROM company_db.employee;
+
+SELECT Emp_name,Salary FROM company_db.employee WHERE salary>=50000;
+========================================================
+
+Q-4.
+===> INSERT NEW EMPLOYEE RECORD IN TABLE ,UPDATE AND DELETE
+
+INSERT INTO company_db.employee(Emp_id,Emp_name,Department,salary)
+values
+(6,'Mohan','F',70000);
+
+UPDATE company_db.employee SET Salary=90000 WHERE Emp_id=2;
+
+DELETE FROM company_db.employee WHERE Emp_id=2;
+
+SELECT * FROM company_db.employee;
+
+========================================================
+
+Q-5.
+===> CREATE PRODUCT TABLE AND INSERT 5 RECORDS
+
+CREATE TABLE company_db.products 
+(
+id int primary key,
+name varchar(50),
+catogery varchar(50),
+price decimal(10,2),
+quentity int
+);
+
+INSERT INTO company_db.products(id,name,catogery,price,quentity)
+values
+(1,'wafer','namkeen',30,500),
+(2,'sev','namkeen',40,300),
+(3,'biskit','sweet',35,650),
+(4,'chocolate','sweet',70,800),
+(5,'namkeen','namkeen',45,200);
+
+========================================================
+
+Q-6.
+===> SOME BESIC QUERIES
+
+SELECT * FROM company_db.products;
+
+UPDATE company_db.products SET catogery = 'Electronomics' WHERE id=2;
+
+SELECT id,name,price FROM company_db.products where price<=70;
+
+========================================================
+Q-7.
+===> INCRESE AND UPDATE VALUES
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE company_db.products
+SET price = price * 1.10
+WHERE catogery = 'Electronomics';
+
+SET SQL_SAFE_UPDATES = 1;
+
+
+UPDATE company_db.products SET quentity=1000 WHERE id=5;
+
+========================================================
+Q-8.
+===> DELETE QUERIES
+
+DELETE FROM company_db.products WHERE id=5;
+
+DELETE FROM company_db.products WHERE quentity = 500 OR quentity = 300;
+========================================================
