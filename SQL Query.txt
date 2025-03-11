@@ -125,7 +125,7 @@ WHERE TABLE_NAME='employee';
 
 Table Data from select query
 
-1 -SELECT * FROM smartphones_cleaned_v6  and SELECT * FROM smartphones_cleaned_v6 WHERE 1 	 
+1 - SELECT * FROM smartphones_cleaned_v6  and SELECT * FROM smartphones_cleaned_v6 WHERE 1
 
 2 - SELECT model , price FROM smartphones_cleaned_v6; - only 2 col 
 
@@ -178,6 +178,7 @@ WHERE Country = 'Mexico';
 19 - UPDATE smartphones_cleaned_v6 SET email = '' , password = '' WHERE  name = 'apple'
 
 20 -  Delete Query - SELECT * FROM smartphones_cleaned_v6 WHERE price > 200000;
+
                      DELETE FROM smartphones_cleaned_v6 WHERE price > 200000
 
 

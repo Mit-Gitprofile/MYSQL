@@ -1,0 +1,215 @@
+Subqueries in SQL (With Examples and Explanation)
+A subquery in SQL is a query nested inside another query. It is also called an inner query or nested query, and the outer query is referred to as the main query.
+
+Subqueries can be used in various SQL commands such as SELECT, INSERT, UPDATE, and DELETE.
+
+Types of Subqueries in SQL:
+
+Single Row Subquery
+Multiple Row Subquery
+Correlated Subquery
+Scalar Subquery
+Nested Subquery
+Inline View (Derived Table)
+Exists Subquery
+----------------------------------------------------------------------------------------------------
+
+1. Single Row Subquery
+
+A subquery that returns only one row as output.
+
+Example Table: Employees
+
+EmployeeID	Name	Department	Salary
+1	Rahul	IT	50000
+2	Anjali	HR	60000
+3	Sameer	IT	70000
+4	Priya	Finance	55000
+5	Amit	IT	65000
+
+Query: Get employees with the highest salary
+
+SELECT * FROM Employees WHERE Salary = (SELECT MAX(Salary) FROM Employees);
+
+---------------------------------------------------------------------------------------------------------
+2. Multiple Row Subquery
+
+A subquery that returns multiple rows as output and is used with IN, ANY, or ALL operators.
+
+Query: Get employees who have the same salary as someone in the IT department
+
+SELECT * FROM Employees
+WHERE Salary IN (SELECT Salary FROM Employees WHERE Department = 'IT');
+
+
+-------------------------------------------------------------------------------------------------------------
+3. Correlated Subquery
+
+A subquery that depends on the outer query and runs once per row in the outer query.
+
+Query: Find employees who earn more than the average salary in their department
+
+SELECT * FROM Employees E1
+WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+
+------------------------------------------------------------------------------------------------------------
+
+4. Scalar Subquery
+
+A subquery that returns exactly one value (one row, one column).
+
+Query: Get the name of the employee with the highest salary
+
+SELECT (SELECT Name FROM Employees WHERE Salary = (SELECT MAX(Salary) FROM Employees)) AS HighestPaidEmployee;
+----------------------------------------------------------------------------------------------------------------------------------
+
+5. Nested Subquery
+
+A subquery inside another subquery.
+
+Query: Find employees whose salary is greater than the average salary of IT department employees
+
+SELECT * FROM Employees
+WHERE Salary > (
+    SELECT AVG(Salary) FROM Employees 
+    WHERE Department = 'IT'
+);
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+6. Inline View (Derived Table)
+
+A subquery used inside the FROM clause, treating the result as a table.
+
+Query: Find the second-highest salary
+
+SELECT Name, Salary FROM 
+(SELECT Name, Salary, RANK() OVER (ORDER BY Salary DESC) AS rank FROM Employees) AS temp
+WHERE rank = 2;
+
+
+----------------------------------------------------------------------------------------------------------
+7. EXISTS Subquery
+
+Checks if a subquery returns any rows. Used with EXISTS.
+
+Query: Find employees who work in departments that have more than one employee
+
+SELECT * FROM Employees E1
+WHERE EXISTS (
+    SELECT 1 FROM Employees E2 
+    WHERE E1.Department = E2.Department 
+    GROUP BY E2.Department 
+    HAVING COUNT(*) > 1
+);
+-------------------------------------------------------------------------------------------------------------
+
+
+
+Summary Table of Subquery Types
+Subquery Type	Returns	Used With
+Single Row Subquery	One row, one column	=, <, >, <=, >=
+Multiple Row Subquery	Multiple rows, one column	IN, ANY, ALL
+Correlated Subquery	Multiple rows	Depends on outer query
+Scalar Subquery	One value (one row, one column)	Anywhere a value is needed
+Nested Subquery	One or more rows	Inside another subquery
+Inline View (Derived Table)	Multiple rows and columns	Used inside FROM
+EXISTS Subquery	Boolean result (true/false)	EXISTS
+
+
+--------------------------------------------------------------------------------------------------------------
+
+1. Using Subquery with SELECT
+
+Query: Display employees along with the highest salary in the company
+
+SELECT Name, Salary, (SELECT MAX(Salary) FROM Employees) AS HighestSalary 
+FROM Employees;
+
+
+2. Using Subquery with FROM (Inline View / Derived Table)
+
+Query: Get employees whose salary is greater than the average salary
+
+SELECT Name, Salary FROM 
+(SELECT Name, Salary, AVG(Salary) OVER () AS avg_salary FROM Employees) AS temp
+WHERE Salary > avg_salary;
+
+
+3. Using Subquery with HAVING
+
+Query: Find departments where the average salary is greater than 55000
+
+SELECT Department, AVG(Salary) AS AvgSalary 
+FROM Employees 
+GROUP BY Department 
+HAVING AVG(Salary) > (SELECT AVG(Salary) FROM Employees);
+
+
+4. Using Subquery with INSERT
+
+Query: Insert employees who earn more than the average salary into another table
+
+INSERT INTO HighSalaryEmployees (EmployeeID, Name, Salary)
+SELECT EmployeeID, Name, Salary FROM Employees 
+WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+
+
+5. Using Subquery with UPDATE
+
+Query: Increase the salary of employees in the IT department by 10% if their salary is less than the average IT salary
+
+UPDATE Employees 
+SET Salary = Salary * 1.1 
+WHERE Department = 'IT' 
+AND Salary < (SELECT AVG(Salary) FROM Employees WHERE Department = 'IT');
+
+
+6. Using Subquery with DELETE
+
+Query: Delete employees who earn the lowest salary
+
+DELETE FROM Employees 
+WHERE Salary = (SELECT MIN(Salary) FROM Employees);
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+CROSS JOIN
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(50)
+);
+
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY,
+    CategoryName VARCHAR(50)
+);
+
+INSERT INTO Products (ProductID, ProductName) VALUES
+(1, 'Laptop'),
+(2, 'Smartphone');
+
+INSERT INTO Categories (CategoryID, CategoryName) VALUES
+(1, 'Electronics'),
+(2, 'Accessories');
+
+
+
+SELECT Products.ProductName, Categories.CategoryName
+FROM Products
+CROSS JOIN Categories;
+
+
+CROSS JOIN: Combines all rows from both tables, producing a Cartesian product.
+
+FULL JOIN: Combines all rows from both tables, including unmatched rows with NULLs.
+
+
+
+
+
+

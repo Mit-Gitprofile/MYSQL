@@ -42,3 +42,155 @@ values
 
 
 Select * from school.products; 
+
+================================================================
+
+Q-3=>
+select columns
+
+Select * from school.products; 
+
+Select name, grade from school.students;
+
+
+
+================================================================
+
+Q-4=>
+select columns
+
+Select * from school.products
+where catogery='namkeen';
+
+select * from school.products where price>=70;
+
+================================================================
+
+Q-5=>
+DISTINCT
+
+select distinct catogery from school.products;
+
+================================================================
+
+Q-6=>
+update grade of students
+
+update school.students set grade='A+' where id=2;
+
+select * from school.students;
+
+
+
+================================================================
+
+Q-7=>
+increase all product price with 10%
+
+
+select * , (price + 100) As New_prices from products;
+
+
+select *,(price+100) as new_price from products;
+select * from products;
+
+alter table products 
+add column newprice int(8);
+
+update products
+set newprice=price+100 where id>0;
+
+
+
+================================================================
+
+Q-8=>
+upgrade students email with grade a
+
+update school.students set email='gradeA@gmail.com' where grade='A';
+select * from school.students;
+
+
+================================================================
+
+Q-9=>
+delete row with id=3
+
+delete from school.students where id =3;
+select * from school.students;
+
+
+================================================================
+
+Q-10=>
+
+delete product row with quentity=0
+
+update products set quentity=0 where price<=40;
+
+delete from products where quentity=0;
+
+================================================================
+
+Q-11=>
+
+delete all students frecord where age>=21
+
+use school;
+select * from students;
+
+insert into students(id,name,age,grade,email)
+values
+(3,'jani',21,'a','jani123@gmail.com');
+
+delete from students where age>=21;
+
+================================================================
+
+Q-12=>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
