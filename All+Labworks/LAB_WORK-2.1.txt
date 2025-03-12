@@ -1,0 +1,193 @@
+    # LABWORk - 2.1 #
+    =================
+q-1=> create table with 10 records
+===================================================================
+
+CREATE TABLE sales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productname VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10, 2),
+    quantity INT,
+    date DATE
+);
+
+INSERT INTO sales (productname, category, price, quantity, date) VALUES
+('Laptop', 'Electronics', 55000.00, 3, '2025-03-01'),
+('Mobile Phone', 'Electronics', 20000.00, 5, '2025-03-02'),
+('Headphones', 'Accessories', 1500.00, 10, '2025-03-03'),
+('Chair', 'Furniture', 3000.50, 2, '2025-03-04'),
+('Table', 'Furniture', 7500.75, 1, '2025-03-05'),
+('Shoes', 'Apparel', 2500.00, 4, '2025-03-06'),
+('T-Shirt', 'Apparel', 500.00, 8, '2025-03-07'),
+('Washing Machine', 'Appliances', 18000.00, 1, '2025-03-08'),
+('Refrigerator', 'Appliances', 35000.00, 2, '2025-03-09'),
+('Book', 'Stationery', 300.00, 15, '2025-03-10');
+
+SELECT * FROM sales;
+
+select * from sales where category='Electronics';
+
+select * from sales where price>=10000;
+select * from sales where price<=10000;
+
+select * from sales where date>='2025-03-05';
+
+
+=======================================================
+
+q-2.=> GROUP BY & HAVING
+
+GROUP BY: is used to group by some table columns like category and others
+
+HAVING : is used to use aggregate function with group by , we don't use these functions with where so...
+
+select * from sales;
+
+select category,sum(quantity),count(*)from sales group by category;
+
+select category,sum(quantity) from sales group by category having sum(quantity)>=10;
+
+========================================================
+
+Q-3.=> ORDER BY - used to give order ascending or descending...
+ 
+select * from sales;
+
+select * from sales limit 5;
+
+select id,productname,price from sales order by price desc limit 3;
+
+========================================================
+
+Q-4.=>  select query
+
+select * from sales;
+
+select productname,category,price from sales where category='Electronics' and price>=100;
+
+========================================================
+
+Q-5.=> select query
+
+select * from sales;
+
+select productname,category,price from sales where category='Electronics' or category='Furniture';
+
+========================================================
+
+Q-6.=> select query
+
+select * from sales;
+
+select id,productname,category,price from sales where category!='Electronics';
+
+select id,productname,category,price from sales where price<=15000;
+
+
+=========================================================
+
+Q-7.=> select queries
+
+SELECT productname,category,price FROM sales ORDER BY price ASC;
+
+SELECT productname,date FROM sales ORDER BY date ASC;
+
+SELECT id,productname,category FROM sales ORDER BY category ASC;
+
+SELECT id,productname,category,price FROM sales ORDER BY price DESC;
+
+
+========================================================
+
+Q-8.=> group by quries
+
+SELECT category,COUNT(*) FROM sales GROUP BY category;
+SELECT category ,price*quantity  AS revenue from sales GROUP BY category;
+
+SELECT category,COUNT(*),AVG(price) as average_price from sales GROUP BY category;
+
+SELECT category,COUNT(*),AVG(price) AS average_price FROM sales GROUP BY category HAVING AVG(price)>=1500;
+
+SELECT productname,category,price,SUM(quantity) as total_quentity FROM sales GROUP BY category;
+
+
+========================================================
+
+Q-9.=> Agregate functions
+
+SELECT productname,quantity,price, price*quantity AS revenue FROM sales;
+
+SELECT productname,AVG(price) AS average_price,quantity FROM sales GROUP BY productname;
+
+SELECT productname, MAX(price) AS highest_val FROM sales;
+
+SELECT productname,category,price ,
+RANK() OVER(ORDER BY price ASC) AS renk
+FROM sales;
+
+SELECT productname,category,price,quantity ,max(quantity) as high_quentity FROM sales;
+
+SELECT COUNT(*) AS count FROM sales;
+
+SELECT category,COUNT(*) AS distint FROM sales GROUP BY category;
+
+============================================================
+
+Q-10.=>hard quries
+
+SELECT productname,category,price, price*quantity AS revenue 
+FROM sales 
+ORDER BY revenue DESC LIMIT 3;
+
+SELECT productname,category,price, price*quantity AS revenue 
+FROM sales 
+ORDER BY revenue DESC;
+
+
+===========================================================
+
+Q-11.=> select quries
+
+SELECT * FROM sales WHERE (category='Electronics' OR category='Furniture') AND price>=200;
+
+===========================================================
+
+Q-12.=>
+
+SELECT *,price*quantity as revenue FROM sales GROUP BY date;
+
+SELECT *,price*quantity as revenue FROM sales GROUP BY date HAVING MAX(revenue) LIMIT 3;
+
+SELECT *,price*quantity as revenue FROM sales ORDER BY revenue DESC LIMIT 3;
+
+==========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
