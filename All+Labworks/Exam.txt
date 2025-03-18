@@ -1,0 +1,347 @@
+=====================================================================================================================
+=====================================================================================================================
+		DB MINER - MYSQL EXAM
+=====================================================================================================================
+LINK-	https://docs.google.com/document/d/1uj4HKDSxMu_Vur_BkJeaC0aBxegsT86v0nRVJh7Zt38/edit?tab=t.0
+=====================================================================================================================
+=====================================================================================================================
+
+TABLE ==> 1 (students)
+*********************************************************************************************************************
+
+CREATE TABLE students 
+(
+    STUDENT_ID int PRIMARY KEY,
+    FIRST_NAME varchar(50),
+    LAST_NAME varchar(50),
+    EMAIL varchar (80),
+    BIRTH_DATE date,
+    ENROLLMENT_DATE date NOT NULL
+);
+
+INSERT INTO students(STUDENT_ID,FIRST_NAME,LAST_NAME,EMAIL,BIRTH_DATE,ENROLLMENT_DATE)
+VALUES
+(1,'John','Deo','johndeo@gmail.com','2000-01-15','2022-08-01'),
+(2,'Jane','Smith','jane.smith12@gmail.com','1999-03-25','2021-08-01'),
+(3,'Rav','paji','pajirav@gmail.com','1999-02-22','2021-09-10'),
+(4,'gaji','bav','bavv@gmail.com','2001-03-25','2022-07-12'),
+(5,'Samir','lal','lalu@gmail.com','1998-03-25','2023-08-21');
+(6,'Jon','Depo','Depo@gmail.com','2001-01-25','2022-08-01'),
+(7,'Janeman','Smithu','Janemanmith12@gmail.com','1998-04-25','2022-07-12'),
+(8,'Ravi','paj','pajrav@gmail.com','2000-01-24','2021-09-30'),
+(9,'jignesh','lalu','laluv@gmail.com','2000-05-27','2022-07-12'),
+(10,'Simaran','palu','palu@gmail.com','1999-07-25','2023-08-22');
+
+
+=====================================================================================================================
+TABLE ==> 2 (courses)
+*********************************************************************************************************************
+
+CREATE TABLE courses
+(
+    COURCE_ID INT PRIMARY KEY,
+    COURCE_NAME VARCHAR(50) NOT NULL,
+    DEPARTMENT_ID INT,
+    CREDITS INT,
+);
+
+INSERT INTO courses(COURCE_ID,COURCE_NAME,DEPARTMENT_ID,CREDITS)
+VALUES
+(101,'Introduction to sql',1,3),
+(102,'data styructutre',2,4),
+(103,'Algorithms',1,4),
+(104,'Linear algebra',2,3),
+(105,'Database systems',1,4),
+(106,'Computer networks',1,3),
+(107,'Operating systems',1,4),
+(108,'Abstract algebra',2,3),
+(109,'Programming in C',1,3),
+(110,'Numerical methods',2,4);
+
+
+=====================================================================================================================
+TABLE ==> 3 (instructors)
+*********************************************************************************************************************
+
+CREATE TABLE instructors 
+(
+    INSTRUCTORS_ID int PRIMARY KEY,
+    FIRST_NAME varchar(50),
+ 	LAST_NAME varchar(50),
+    EMAIL varchar (80),
+    DEPARTMENT_ID INT
+);
+
+INSERT INTO instructors(INSTRUCTORS_ID,FIRST_NAME,LAST_NAME,EMAIL,DEPARTMENT_ID)
+VALUES
+(1,'Alice','bob','alicebob@gmail.com',1),
+(2,'Sam','paal','paal.sam@gmail.com',2),
+(3,'Jon','Doe','jondoe@example.com',3),
+(4,'Ana','Smith','ana.smith@example.com',4),
+(5,'Raj','Patel','raj.patel@example.com',5),
+(6,'Sara','Lee','sara.lee@example.com',6),
+(7,'Tom','Brown','tom.brown@example.com',7),
+(8,'Liam','Davis','liam.davis@example.com',8),
+(9,'Emma','Johnson','emma.johnson@example.com',9),
+(10,'Ava','Wilson','ava.wilson@example.com',10);
+
+=====================================================================================================================
+TABLE ==> 4 (enrollments)
+*********************************************************************************************************************
+
+CREATE TABLE enrollments 
+(
+    ENROLLMENT_ID int PRIMARY KEY,
+    STUDENT_ID INT(3),
+ 	COURCE_ID INT(5),
+    ENROLLMENT_DATE DATE
+);
+
+INSERT INTO enrollments(ENROLLMENT_ID,STUDENT_ID,COURCE_ID,ENROLLMENT_DATE)
+VALUES
+(1,1,101,'2022-08-01'),
+(2,2,102,'2021-07-01'),
+(3,3,103,'2022-09-15'),
+(4,4,104,'2021-06-10'),
+(5,5,105,'2023-01-20'),
+(6,6,106,'2022-12-05'),
+(7,7,107,'2023-03-25'),
+(8,8,108,'2021-08-30'),
+(9,9,109,'2023-02-10'),
+(10,10,110,'2022-11-18');
+
+=====================================================================================================================
+TABLE ==> 5 (departments)
+*********************************************************************************************************************
+
+CREATE TABLE departments
+(
+    DEPARTMENT_ID int PRIMARY KEY,
+    DEPARTMENT_NAME VARCHAR(50)
+);
+
+INSERT INTO departments(DEPARTMENT_ID,DEPARTMENT_NAME)
+VALUES
+(1,'Computer science'),
+(2,'Mathmetics'),
+(3,'Physics'),
+(4,'Chemistry'),
+(5,'Biology'),
+(6,'Economics'),
+(7,'History'),
+(8,'Philosophy'),
+(9,'Political science'),
+
+
+
+=====================================================================================================================
+
+				QUERIES
+				=======
+=====================================================================================================================
+	QUE-1.=>  crud operations
+*********************************************************************************************************************
+	========================================================================
+	INSERT INTO departments(DEPARTMENT_ID,DEPARTMENT_NAME)
+	VALUES
+	(10,'Engineering');
+	========================================================================
+	SELECT * FROM students WHERE STUDENT_ID=9;
+	========================================================================
+	UPDATE courses SET COURCE_NAME='Algorithms of maths' WHERE COURCE_ID=103;
+	========================================================================
+	DELETE courses WHERE COURCE_ID=109;
+	========================================================================
+*********************************************************************************************************************
+
+
+
+
+=====================================================================================================================
+	QUE-2.=>	Retrieve students who enrolled after 2022.
+*********************************************************************************************************************
+
+	SELECT * FROM students WHERE ENROLLMENT_DATE>='2022-01-01';
+
+*********************************************************************************************************************
+
+
+
+=====================================================================================================================
+	QUE-3.=>Retrieve courses offered by the Mathematics department with a limit of 5Retrieve students who enrolled after 2022.
+*********************************************************************************************************************
+	SELECT COURCE_ID,COURCE_NAME,CREDITS
+	FROM Courses
+	(SELECT DEPARTMENT_ID,DEPARTMENT_NAME FROM departments WHERE DEPARTMENT_NAME ='Mathmetics') LIMIT 5;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-4.=>Get the number of students enrolled in each course, filtering for courses with more than 5 students.
+*********************************************************************************************************************
+
+	SELECT COURCE_NAME,COUNT(*) AS Enroll_students 
+	FROM courses 
+	GROUP BY COURCE_NAME 
+	HAVING Enroll_students>=5; 
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-5.=>Find students who are enrolled in both "Introduction to SQL" and "Data Structures".
+*********************************************************************************************************************
+
+	SELECT *
+	FROM students s
+	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	JOIN courses e2 ON e1.COURCE_ID=e2.COURCE_ID
+	WHERE e2.COURCE_NAME='Introduction to SQL' AND e2.COURCE_NAME='Introduction to SQL';
+
+*********************************************************************************************************************
+
+
+
+=====================================================================================================================
+	QUE-6.=>Find students who are either enrolled in "Introduction to SQL" or "Data Structures".
+*********************************************************************************************************************
+
+	SELECT *
+	FROM students s
+	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	JOIN courses e2 ON e1.COURCE_ID=e2.COURCE_ID
+	WHERE e2.COURCE_NAME='c++' OR e2.COURCE_NAME='c';
+
+*********************************************************************************************************************
+
+
+
+
+=====================================================================================================================
+	QUE-7.=>Calculate the average number of credits for all courses.
+*********************************************************************************************************************
+
+	SELECT COURCE_NAME,AVG(CREDITS) AS average FROM courses GROUP BY COURCE_NAME;
+
+*********************************************************************************************************************
+
+
+
+=====================================================================================================================
+	QUE-8.=>Find the maximum salary of instructors in the Computer Science department.
+*********************************************************************************************************************
+	
+	SELECT d.DEPARTMENT_ID,d.DEPARTMENT_NAME,d2.FIRST_NAME,d2.LAST_NAME 
+	FROM departments d 
+	JOIN instructors d2 ON d.DEPARTMENT_ID=d2.DEPARTMENT_ID 
+	WHERE d.DEPARTMENT_NAME='Computer Science';
+
+*********************************************************************************************************************
+
+
+
+=====================================================================================================================
+	QUE-9.=>Count the number of students enrolled in each department.
+*********************************************************************************************************************
+
+	SELECT s.FIRST_NAME,s.LAST_NAME,COUNT(c1.COURCE_ID) AS count_student,d1.DEPARTMENT_NAME
+	FROM students s
+	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	JOIN courses c1 ON e1.COURCE_ID=c1.COURCE_ID
+	JOIN departments d1 ON c1.DEPARTMENT_ID=d1.DEPARTMENT_ID
+	GROUP BY d1.DEPARTMENT_NAME;
+
+*********************************************************************************************************************
+
+
+
+=====================================================================================================================
+	QUE-10.=>INNER JOIN: Retrieve students and their corresponding courses.
+*********************************************************************************************************************
+
+	SELECT s.STUDENT_ID,s.FIRST_NAME,s.LAST_NAME,c1.COURCE_NAME,c1.CREDITS
+	FROM students s
+	INNER JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	INNER JOIN courses c1 ON e1.COURCE_ID=c1.COURCE_ID;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-11.=>LEFT JOIN: Retrieve all students and their corresponding courses, if any.
+*********************************************************************************************************************
+
+	SELECT s.STUDENT_ID,s.FIRST_NAME,s.LAST_NAME,c1.COURCE_NAME,c1.CREDITS
+	FROM students s
+	LEFT JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	LEFT JOIN courses c1 ON e1.COURCE_ID=c1.COURCE_ID;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-12.=>Subquery: Find students enrolled in courses that have more than 10 students.
+*********************************************************************************************************************
+
+	SELECT DISTINCT s.STUDENT_ID,s.FIRST_NAME,s.LAST_NAME
+	FROM students s
+	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
+	WHERE e1.COURCE_ID IN 
+	(SELECT COURCE_IDFROM enrollments GROUP BY COURCE_ID HAVING COUNT(STUDENT_ID)>=10);
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-13.=>Extract the year from the EnrollmentDate of students.
+*********************************************************************************************************************
+
+	SELECT STUDENT_ID,FIRST_NAME,LAST_NAME,YEAR(ENROLLMENT_DATE) AS enroll_year FROM students;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-14.=>Concatenate the instructor's first and last name.
+*********************************************************************************************************************
+
+	SELECT INSTRUCTORS_ID, CONCAT(FIRST_NAME,' ',LAST_NAME) AS fullname FROM instructors;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-15.=>Calculate the running total of students enrolled in courses.
+*********************************************************************************************************************
+
+	SELECT COURCE_ID, COUNT(STUDENT_ID) AS Total,
+        SUM(COUNT(STUDENT_ID)) OVER (ORDER BY ASC) AS Running
+	FROM enrollments GROUP BY COURCE_ID;
+
+*********************************************************************************************************************
+
+
+=====================================================================================================================
+	QUE-16.=>Label students as 'Senior' or 'Junior' based on their year of enrollment.
+*********************************************************************************************************************
+
+	
+	SELECT STUDENT_ID,FIRST_NAME,LAST_NAME
+	CASE WHEN DATEDIFF(YEAR,ENROLLMENT_DATE, CURRENT_DATE)>= 5 THEN 'Senior'
+	ELSE 'Junior'
+	END AS LABEL FROM students;
+
+*********************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
