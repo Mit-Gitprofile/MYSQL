@@ -237,12 +237,56 @@ VALUES
 	FROM departments d 
 	JOIN instructors d2 ON d.DEPARTMENT_ID=d2.DEPARTMENT_ID 
 	WHERE d.DEPARTMENT_NAME='Computer Science';
+	
+=================================================================
+	alter table instructors add column salary int not null;
+=================================================================
+UPDATE instructors
+set salary=20000
+where INSTRUCTORS_ID=1;
+UPDATE instructors
+set salary=20000
+where INSTRUCTORS_ID=2;
+UPDATE instructors
+set salary=25000
+where INSTRUCTORS_ID=3;
+UPDATE instructors
+set salary=30000
+where INSTRUCTORS_ID=4;
+UPDATE instructors
+set salary=50000
+where INSTRUCTORS_ID=5;
+UPDATE instructors
+set salary=40000
+where INSTRUCTORS_ID=6;
+UPDATE instructors
+set salary=30000
+where INSTRUCTORS_ID=7;
+UPDATE instructors
+set salary=35000
+where INSTRUCTORS_ID=8;
+UPDATE instructors
+set salary=45000
+where INSTRUCTORS_ID=9;
+UPDATE instructors
+set salary=75000
+where INSTRUCTORS_ID=10;
 
 ========EXTRA FOR DSALARY COUNT.=================
 
 	AND d2.SALARY = (SELECT MAX(SALARY)
     	FROM instructors
     	WHERE DEPARTMENT_ID = d.DEPARTMENT_ID;
+
+========FINAL QUERY.=================
+
+SELECT d.DEPARTMENT_ID,d.DEPARTMENT_NAME,d2.FIRST_NAME,d2.LAST_NAME,d2.salary 
+	FROM departments d 
+	JOIN instructors d2 ON d.DEPARTMENT_ID=d2.DEPARTMENT_ID 
+	WHERE d.DEPARTMENT_NAME='Computer Science'
+    AND d2.salary = (SELECT max(salary)
+    	FROM instructors
+    	WHERE DEPARTMENT_ID = d.DEPARTMENT_ID);
 
 *********************************************************************************************************************
 
