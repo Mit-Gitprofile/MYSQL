@@ -25,7 +25,7 @@ VALUES
 (2,'Jane','Smith','jane.smith12@gmail.com','1999-03-25','2021-08-01'),
 (3,'Rav','paji','pajirav@gmail.com','1999-02-22','2021-09-10'),
 (4,'gaji','bav','bavv@gmail.com','2001-03-25','2022-07-12'),
-(5,'Samir','lal','lalu@gmail.com','1998-03-25','2023-08-21');
+(5,'Samir','lal','lalu@gmail.com','1998-03-25','2023-08-21'),
 (6,'Jon','Depo','Depo@gmail.com','2001-01-25','2022-08-01'),
 (7,'Janeman','Smithu','Janemanmith12@gmail.com','1998-04-25','2022-07-12'),
 (8,'Ravi','paj','pajrav@gmail.com','2000-01-24','2021-09-30'),
@@ -42,7 +42,7 @@ CREATE TABLE courses
     COURCE_ID INT PRIMARY KEY,
     COURCE_NAME VARCHAR(50) NOT NULL,
     DEPARTMENT_ID INT,
-    CREDITS INT,
+    CREDITS INT
 );
 
 INSERT INTO courses(COURCE_ID,COURCE_NAME,DEPARTMENT_ID,CREDITS)
@@ -130,7 +130,7 @@ VALUES
 (6,'Economics'),
 (7,'History'),
 (8,'Philosophy'),
-(9,'Political science'),
+(9,'Political science');
 
 
 
@@ -161,7 +161,7 @@ VALUES
 	QUE-2.=>	Retrieve students who enrolled after 2022.
 *********************************************************************************************************************
 
-	SELECT * FROM students WHERE ENROLLMENT_DATE>='2022-01-01';
+	SELECT * FROM students WHERE year(ENROLLMENT_DATE)=2022;
 
 *********************************************************************************************************************
 
@@ -171,8 +171,9 @@ VALUES
 	QUE-3.=>Retrieve courses offered by the Mathematics department with a limit of 5Retrieve students who enrolled after 2022.
 *********************************************************************************************************************
 	SELECT COURCE_ID,COURCE_NAME,CREDITS
-	FROM Courses
-	(SELECT DEPARTMENT_ID,DEPARTMENT_NAME FROM departments WHERE DEPARTMENT_NAME ='Mathmetics') LIMIT 5;
+	FROM courses WHERE DEPARTMENT_ID in 
+    	(SELECT DEPARTMENT_ID,DEPARTMENT_NAME FROM departments WHERE DEPARTMENT_NAME ='Mathematics')AND year(ENROLLMENT_DATE)=2022
+    	LIMIT 5;
 
 *********************************************************************************************************************
 
@@ -237,6 +238,12 @@ VALUES
 	JOIN instructors d2 ON d.DEPARTMENT_ID=d2.DEPARTMENT_ID 
 	WHERE d.DEPARTMENT_NAME='Computer Science';
 
+========EXTRA FOR DSALARY COUNT.=================
+
+	AND d2.SALARY = (SELECT MAX(SALARY)
+    	FROM instructors
+    	WHERE DEPARTMENT_ID = d.DEPARTMENT_ID;
+
 *********************************************************************************************************************
 
 
@@ -245,7 +252,7 @@ VALUES
 	QUE-9.=>Count the number of students enrolled in each department.
 *********************************************************************************************************************
 
-	SELECT s.FIRST_NAME,s.LAST_NAME,COUNT(c1.COURCE_ID) AS count_student,d1.DEPARTMENT_NAME
+	SELECT d1.DEPARTMENT_NAME,COUNT(s.STUDENT_ID) AS count_student
 	FROM students s
 	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
 	JOIN courses c1 ON e1.COURCE_ID=c1.COURCE_ID
@@ -288,7 +295,7 @@ VALUES
 	FROM students s
 	JOIN enrollments e1 ON s.STUDENT_ID=e1.STUDENT_ID
 	WHERE e1.COURCE_ID IN 
-	(SELECT COURCE_IDFROM enrollments GROUP BY COURCE_ID HAVING COUNT(STUDENT_ID)>=10);
+	(SELECT COURCE_ID FROM enrollments GROUP BY COURCE_ID HAVING COUNT(STUDENT_ID)>=10);
 
 *********************************************************************************************************************
 
@@ -306,7 +313,7 @@ VALUES
 	QUE-14.=>Concatenate the instructor's first and last name.
 *********************************************************************************************************************
 
-	SELECT INSTRUCTORS_ID, CONCAT(FIRST_NAME,' ',LAST_NAME) AS fullname FROM instructors;
+	SELECT INSTRUCTORS_ID,FIRST_NAME,LAST_NAME, CONCAT(FIRST_NAME,' ',LAST_NAME) AS fullname FROM instructors;
 
 *********************************************************************************************************************
 
@@ -316,7 +323,7 @@ VALUES
 *********************************************************************************************************************
 
 	SELECT COURCE_ID, COUNT(STUDENT_ID) AS Total,
-        SUM(COUNT(STUDENT_ID)) OVER (ORDER BY ASC) AS Running
+	RANK() OVER(ORDER BY COURCE_ID ASC) AS Running
 	FROM enrollments GROUP BY COURCE_ID;
 
 *********************************************************************************************************************
@@ -327,8 +334,8 @@ VALUES
 *********************************************************************************************************************
 
 	
-	SELECT STUDENT_ID,FIRST_NAME,LAST_NAME
-	CASE WHEN DATEDIFF(YEAR,ENROLLMENT_DATE, CURRENT_DATE)>= 5 THEN 'Senior'
+	SELECT STUDENT_ID,FIRST_NAME,LAST_NAME,ENROLLMENT_DATE,
+	CASE WHEN DATEDIFF(CURRENT_DATE(),ENROLLMENT_DATE)>= 4 THEN 'Senior'
 	ELSE 'Junior'
 	END AS LABEL FROM students;
 
